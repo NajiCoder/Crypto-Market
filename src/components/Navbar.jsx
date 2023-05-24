@@ -11,7 +11,7 @@ export default function Navbar() {
   const newsMatch = useMatch("/news");
 
   return (
-    <div className="navbar bg-black flex flex-col h-screen gap-10 w-full items-center">
+    <div className="navbar bg-black flex flex-col h-screen gap-10 w-1/4 items-center p-4">
       <div className="flex items-center justify-center p-2">
         <div className="w-24 rounded-full">
           <img
@@ -23,7 +23,7 @@ export default function Navbar() {
           CryptoVerse
         </Link>
       </div>
-      <div>
+      <div className="items-center">
         <ul className="menu bg-black rounded-box">
           <li>
             <Link
