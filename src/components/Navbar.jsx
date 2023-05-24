@@ -11,7 +11,7 @@ export default function Navbar() {
   const newsMatch = useMatch("/news");
 
   return (
-    <div className="navbar bg-black flex flex-col h-screen w-1/4 gap-10">
+    <div className="navbar bg-black flex flex-col h-screen gap-10 w-full items-center">
       <div className="flex items-center justify-center p-2">
         <div className="w-24 rounded-full">
           <img
@@ -51,7 +51,7 @@ export default function Navbar() {
             <Link
               to="/exchanges"
               className={`text-white text-xl flex items-center justify-center p-2 ${
-                exchangesMatch ? "text-rose-500" : ""
+                exchangesMatch ? "text-rose-500" : "text-blue-700"
               }`}
             >
               <RiExchangeBoxLine />

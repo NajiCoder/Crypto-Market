@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import {
   Navbar,
@@ -12,8 +12,10 @@ import {
 function App() {
   return (
     <div className="flex">
-      {/* Navbar */}
-      <Navbar />
+      <div className="w-1/4">
+        {/* Navbar */}
+        <Navbar />
+      </div>
 
       {/* Main */}
       <div className="flex flex-col flex-1">
@@ -28,6 +30,21 @@ function App() {
           </Routes>
         </div>
       </div>
+
+      {/* Footer */}
+
+      <footer>
+        <div>
+          <h1>CryptoVerse</h1>
+          <p> All rights reserved</p>
+        </div>
+        <div>
+          <Link to="/">Home</Link>
+          <Link to="/exchanges">Exchanges</Link>
+          <Link to="/cryptocurrencies">Cryptocurrencies</Link>
+          <Link to="/news">News</Link>
+        </div>
+      </footer>
     </div>
   );
 }
