@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+// import axios from "axios";
 
 import {
   Navbar,
@@ -10,13 +11,21 @@ import {
 } from "./components";
 
 function App() {
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await axios.request(options);
+  //     console.log(response.data.data.stats);
+  //   }
+  //   fetchData();
+  // }, []);
+
   return (
     <div className="flex min-h-screen">
       {/* Navbar */}
       <Navbar />
 
       {/* Main */}
-      <div className="w-3/4 flex flex-col">
+      <div className="sm:w-2/3 w-3/4 flex flex-col">
         <div className="bg-purple-300 h-full">
           {/* Routes */}
           <div>
