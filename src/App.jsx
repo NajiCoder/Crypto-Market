@@ -11,14 +11,6 @@ import {
 } from "./components";
 
 function App() {
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await axios.request(options);
-  //     console.log(response.data.data.stats);
-  //   }
-  //   fetchData();
-  // }, []);
-
   return (
     <div className="flex min-h-screen">
       {/* Navbar */}
