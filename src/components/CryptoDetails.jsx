@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useGetCryptoDetailsQuery } from "../services/cryptoApi";
 import { millify } from "millify";
+import HTMLReactParser from "html-react-parser";
 import {
   AiFillDollarCircle,
   AiOutlineNumber,
@@ -11,6 +12,8 @@ import {
   AiOutlineFund,
   AiOutlineMoneyCollect,
   AiOutlineExclamationCircle,
+  AiOutlineCheck,
+  AiOutlineStop,
 } from "react-icons/ai";
 
 export default function CryptoDetails() {
@@ -22,7 +25,9 @@ export default function CryptoDetails() {
 
   const cryptoDetails = data?.data?.coin;
 
-  const time = ["24h", "7d", "30d", "1y", "5y"];
+  const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
+
+  console.log(cryptoDetails.description);
 
   const stats = [
     {
@@ -67,9 +72,9 @@ export default function CryptoDetails() {
     {
       title: "Aprroved Supply",
       value: cryptoDetails?.supply?.confirmed ? (
-        <CheckOutlined />
+        <AiOutlineCheck />
       ) : (
-        <StopOutlined />
+        <AiOutlineStop />
       ),
       icon: <AiOutlineExclamationCircle />,
     },
@@ -90,11 +95,105 @@ export default function CryptoDetails() {
     },
   ];
 
-  console.log(data);
-
   return (
-    <div>
-      <h1>Crypto {coinId}</h1>
-    </div>
+    <main>
+      <div className="flex items-center justify-center">
+        <div>
+          <h2 className="text-center">{cryptoDetails.name} Price</h2>
+          <p>
+            {cryptoDetails.name} live price in US dollars. View value
+            statistics, market cap and supply.
+          </p>
+        </div>
+      </div>
+      <hr />
+      <select
+        defaultValue="7d"
+        className="p-2 mb-4 rounded-md shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+        onChange={(e) => setTimePeriod(e.target.value)}
+      >
+        {time.map((date) => (
+          <option key={date}>{date}</option>
+        ))}
+      </select>
+      <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col w-[50%] md:w-full sm:w-full">
+          <div className="flex flex-col space-y-3">
+            <h2 className="text-center font-medium ">
+              {cryptoDetails.name} Value Statistics
+            </h2>
+            <p>
+              An overview showing the statistics of {cryptoDetails.name}, such
+              as the base and quote currency, the rank, and trading volume.
+            </p>
+          </div>
+
+          <div className="flex flex-col justify-center items-center mt-5">
+            {stats.map((stat) => (
+              <div
+                key={stat.title}
+                className="bg-gray-600 flex items-center justify-between w-[65%] md:w-[50%] sm:w-[50%] p-4 mb-4 rounded-md shadow-md hover:bg-gray-500 hover:cursor-pointer transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center justify-center">
+                  {stat.icon} {stat.title}
+                </div>
+                <div className="flex items-center justify-center">
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col w-[50%] md:w-full sm:w-full">
+          <div>
+            <div className="flex flex-col space-y-3 pb-6">
+              <h2 className="text-center font-medium ">Other Statistics</h2>
+              <p>An overview showing the statistics of all cryptocurrencies</p>
+            </div>
+          </div>
+          <div className="flex flex-col justify-center items-center mt-5">
+            {genericStats.map((stat) => (
+              <div
+                key={stat.title}
+                className="bg-gray-600 flex items-center justify-between p-4 w-[65%] md:w-[50%] sm:w-[50%] mb-4 rounded-md shadow-md hover:bg-gray-500 hover:cursor-pointer transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center justify-center">
+                  {stat.icon} {stat.title}
+                </div>
+                <div className="flex items-center justify-center">
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="flex flex-col space-y-3 pb-6">
+          <h2 className="font-medium ">What is {cryptoDetails.name} ?</h2>
+          <p>{cryptoDetails.description}</p>
+        </div>
+        <div>
+          <h2>{cryptoDetails.name} Links</h2>
+          <div className="flex flex-col gap-2 items-center">
+            {cryptoDetails.links.map((link) => (
+              <div
+                key={link.name}
+                className="flex items-center justify-between w-[50%] p-4 mb-4 shadow-md hover:bg-gray-300 transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center justify-center">
+                  {link.type}
+                </div>
+                <div className="flex items-center justify-center text-blue-400 hover:underline hover:cursor-pointer">
+                  <a href={link.url} target="_blank" rel="noreferrer">
+                    {link.name}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
