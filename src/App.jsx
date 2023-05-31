@@ -17,7 +17,7 @@ function App() {
       <Navbar />
 
       {/* Main */}
-      <div className="sm:w-2/3 w-3/4 flex flex-col">
+      <div className="sm:w-3/4 w-4/5 flex flex-col">
         <div className="bg-purple-300 h-full">
           {/* Routes */}
           <div>

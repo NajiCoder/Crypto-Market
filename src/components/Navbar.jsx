@@ -10,7 +10,7 @@ export default function Navbar() {
   const exchangesMatch = useMatch("/exchanges");
   const newsMatch = useMatch("/news");
   return (
-    <div className="navbar bg-black flex flex-col h-screen gap-10 sm:w-1/3 w-1/4 items-center p-4">
+    <div className="navbar bg-black flex flex-col h-screen gap-10 sm:w-1/4 w-1/5 items-center p-4">
       <div className="flex items-center justify-center p-2">
         <div className="w-24 rounded-full">
           <img

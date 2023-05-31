@@ -30,6 +30,8 @@ export default function Cryptocurrencies({ simplified }) {
       </div>
     );
 
+  // console.log(cryptos);
+
   return (
     <main className="p-2">
       {!simplified && (
@@ -44,14 +46,14 @@ export default function Cryptocurrencies({ simplified }) {
       )}
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
-        {cryptos?.map((crypto, index) => (
-          <div key={index} className="bg-slate-300">
-            <Link to={`/crypto/${crypto.id}`}>
+        {cryptos?.map((crypto) => (
+          <div key={crypto.uuid} className="bg-slate-300">
+            <Link to={`/crypto/${crypto.uuid}`}>
               <div className="flex items-center p-2 rounded-md shadow-md hover:shadow-lg transition duration-300 ease-in-out">
                 <div className="flex w-full flex-col items-center ">
                   <div className="flex w-full items-center justify-between ">
                     <h1 className="text-gray-700 font-semibold">
-                      {index + 1}. {crypto.name}
+                      {crypto.rank}. {crypto.name}
                     </h1>
                     <img
                       src={crypto.iconUrl}

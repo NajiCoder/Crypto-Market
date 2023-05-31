@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "daisyui": "^2.51.6",
+    "html-react-parser": "^4.0.0",
     "millify": "^6.1.0",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
