@@ -1,6 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useGetCryptoDetailsQuery } from "../services/cryptoApi";
+import {
+  useGetCryptoDetailsQuery,
+  useGetCryptoHistoryQuery,
+} from "../services/cryptoApi";
+
+import LineChart from "./LineChart";
+
 import { millify } from "millify";
 import HTMLReactParser from "html-react-parser";
 import {
@@ -19,15 +25,33 @@ import {
 export default function CryptoDetails() {
   const { coinId } = useParams();
 
-  const { timePeriod, setTimePeriod } = useState("7d");
+  const [timePeriod, setTimePeriod] = useState("7d");
 
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
+  // Rename data to coinHistory
+  const { data: coinHistory } = useGetCryptoHistoryQuery({
+    coinId,
+    timePeriod,
+  });
+
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (!data || !coinHistory) {
+    return null;
+  }
 
   const cryptoDetails = data?.data?.coin;
 
   const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
   console.log(cryptoDetails.description);
+  console.log(`the time period is ${timePeriod}`);
 
   const stats = [
     {
@@ -116,6 +140,11 @@ export default function CryptoDetails() {
           <option key={date}>{date}</option>
         ))}
       </select>
+      {/* <LineChart
+        coinHistory={coinHistory}
+        currentPrice={millify(cryptoDetails.price)}
+        coinName={cryptoDetails.name}
+      /> */}
       <div className="flex flex-col lg:flex-row">
         <div className="flex flex-col w-[50%] md:w-full sm:w-full">
           <div className="flex flex-col space-y-3">
@@ -171,7 +200,7 @@ export default function CryptoDetails() {
       <div>
         <div className="flex flex-col space-y-3 pb-6">
           <h2 className="font-medium ">What is {cryptoDetails.name} ?</h2>
-          <p>{cryptoDetails.description}</p>
+          <p>{HTMLReactParser(cryptoDetails.description)}</p>
         </div>
         <div>
           <h2>{cryptoDetails.name} Links</h2>
