@@ -5,8 +5,6 @@ import {
   useGetCryptoHistoryQuery,
 } from "../services/cryptoApi";
 
-import LineChart from "./LineChart";
-
 import { millify } from "millify";
 import HTMLReactParser from "html-react-parser";
 import {
@@ -50,7 +48,7 @@ export default function CryptoDetails() {
 
   const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
-  console.log(cryptoDetails.description);
+  console.log(cryptoDetails);
   console.log(`the time period is ${timePeriod}`);
 
   const stats = [
@@ -62,7 +60,9 @@ export default function CryptoDetails() {
     { title: "Rank", value: cryptoDetails?.rank, icon: <AiOutlineNumber /> },
     {
       title: "24h Volume",
-      value: `$ ${cryptoDetails?.volume && millify(cryptoDetails?.volume)}`,
+      value: `$ ${
+        cryptoDetails?.["24hVolume"] && millify(cryptoDetails?.["24hVolume"])
+      }`,
       icon: <AiOutlineThunderbolt />,
     },
     {
@@ -158,9 +158,9 @@ export default function CryptoDetails() {
           </div>
 
           <div className="flex flex-col justify-center items-center mt-5">
-            {stats.map((stat) => (
+            {stats.map((stat, index) => (
               <div
-                key={stat.title}
+                key={index}
                 className="bg-gray-600 flex items-center justify-between w-[65%] md:w-[50%] sm:w-[50%] p-4 mb-4 rounded-md shadow-md hover:bg-gray-500 hover:cursor-pointer transition duration-300 ease-in-out"
               >
                 <div className="flex items-center justify-center">
@@ -181,9 +181,9 @@ export default function CryptoDetails() {
             </div>
           </div>
           <div className="flex flex-col justify-center items-center mt-5">
-            {genericStats.map((stat) => (
+            {genericStats.map((stat, index) => (
               <div
-                key={stat.title}
+                key={index}
                 className="bg-gray-600 flex items-center justify-between p-4 w-[65%] md:w-[50%] sm:w-[50%] mb-4 rounded-md shadow-md hover:bg-gray-500 hover:cursor-pointer transition duration-300 ease-in-out"
               >
                 <div className="flex items-center justify-center">

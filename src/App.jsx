@@ -3,7 +3,6 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import {
   Navbar,
-  Exchanges,
   HomePage,
   Cryptocurrencies,
   CryptoDetails,
@@ -23,7 +22,6 @@ function App() {
           <div>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/exchanges" element={<Exchanges />} />
               <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
               <Route path="/crypto/:coinId" element={<CryptoDetails />} />
               <Route path="/news" element={<News />} />

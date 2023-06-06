@@ -14,8 +14,6 @@ export default function HomePage() {
         <p className="text-3xl font-semibold text-gray-700">Loading...</p>
       </div>
     );
-  console.log(coinsStats);
-  console.log(coinsStats.total);
 
   return (
     <main className="flex flex-col gap-4">

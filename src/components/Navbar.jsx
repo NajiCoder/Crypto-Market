@@ -1,14 +1,35 @@
-import { Link, useMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
-import { RiExchangeBoxLine } from "react-icons/ri";
 import { MdOutlineSsidChart } from "react-icons/md";
 import { IoNewspaperOutline } from "react-icons/io5";
 
+import { useState, useEffect } from "react";
+
 export default function Navbar() {
-  const homeMatch = useMatch({ path: "/", exact: true });
-  const cryptocurrenciesMatch = useMatch("/cryptocurrencies");
-  const exchangesMatch = useMatch("/exchanges");
-  const newsMatch = useMatch("/news");
+  const [activeMenu, setActiveMenu] = useState(true);
+
+  const [screenSize, setScreenSize] = useState(null);
+
+  useEffect(() => {
+    function handleResize() {
+      setScreenSize(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (screenSize < 640) {
+      setActiveMenu(false);
+    } else {
+      setActiveMenu(true);
+    }
+  }, [screenSize]);
+
   return (
     <div className="navbar bg-black flex flex-col h-screen gap-10 sm:w-1/4 w-1/5 items-center p-4">
       <div className="flex items-center justify-center p-2">
@@ -22,55 +43,39 @@ export default function Navbar() {
           CryptoVerse
         </Link>
       </div>
-      <div className="items-center">
-        <ul className="menu bg-black rounded-box">
-          <li>
-            <Link
-              to="/"
-              className={`text-white text-xl flex items-center justify-center p-2 ${
-                homeMatch ? "text-rose-500" : ""
-              }`}
-            >
-              <AiOutlineHome />
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/cryptocurrencies"
-              className={`text-white text-xl flex items-center justify-center p-2 ${
-                cryptocurrenciesMatch ? "text-rose-500" : ""
-              }`}
-            >
-              <MdOutlineSsidChart />
-              Cryptocurrencies
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/exchanges"
-              className={
-                "text-white text-xl flex items-center justify-center p-2" +
-                (exchangesMatch ? "text-rose-500" : console.log("hi there"))
-              }
-            >
-              <RiExchangeBoxLine />
-              Exchanges
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/news"
-              className={`text-white text-xl flex items-center justify-center p-2 ${
-                newsMatch ? "text-rose-500" : ""
-              }`}
-            >
-              <IoNewspaperOutline />
-              News
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {activeMenu && (
+        <div className="items-center">
+          <ul className="menu bg-black rounded-box">
+            <li>
+              <Link
+                to="/"
+                className={`text-white text-xl flex items-center justify-center p-2`}
+              >
+                <AiOutlineHome />
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/cryptocurrencies"
+                className={`text-white text-xl flex items-center justify-center p-2`}
+              >
+                <MdOutlineSsidChart />
+                Cryptocurrencies
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/news"
+                className={`text-white text-xl flex items-center justify-center p-2 `}
+              >
+                <IoNewspaperOutline />
+                News
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
